@@ -1,36 +1,27 @@
-// Redirect to login if user is not logged in
-document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("username")) {
-        window.location.href = "login.html";
-    } else {
-        loadFeed();
-    }
-});
+// Upload photo function
+function uploadPhoto() {
+    let fileInput = document.getElementById("photoInput").files[0];
+    let caption = document.getElementById("captionInput").value.trim();
+    let username = localStorage.getItem("username");
 
-// Logout function
-function logout() {
-    localStorage.removeItem("username");
-    window.location.href = "login.html";
-}
-
-// Load Feed from LocalStorage
-function loadFeed() {
-    let feedContainer = document.getElementById("feed");
-    let photos = JSON.parse(localStorage.getItem("photos")) || [];
-
-    if (photos.length === 0) {
-        feedContainer.innerHTML = "<p>No travel photos uploaded yet!</p>";
+    if (!fileInput) {
+        alert("Please select a photo!");
         return;
     }
 
-    photos.forEach(photo => {
-        let post = document.createElement("div");
-        post.classList.add("feed-item");
-        post.innerHTML = `
-            <img src="${photo.image}" alt="Travel Photo">
-            <p><strong>@${photo.username}</strong></p>
-            <p>${photo.caption}</p>
-        `;
-        feedContainer.appendChild(post);
-    });
+    let reader = new FileReader();
+    reader.readAsDataURL(fileInput);
+    reader.onload = function () {
+        let imageBase64 = reader.result;
+        let photos = JSON.parse(localStorage.getItem("photos")) || [];
+
+        photos.push({
+            username: username,
+            image: imageBase64,
+            caption: caption
+        });
+
+        localStorage.setItem("photos", JSON.stringify(photos));
+        window.location.href = "index.html"; // Redirect to feed
+    };
 }

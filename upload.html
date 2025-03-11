@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload | TravelShare</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h2>Upload Photo</h2>
+        <button onclick="window.location.href='index.html'">Back</button>
+    </header>
+
+    <div class="upload-container">
+        <input type="file" id="photoInput" accept="image/*">
+        <input type="text" id="captionInput" placeholder="Enter caption">
+        <button onclick="uploadPhoto()">Upload</button>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
